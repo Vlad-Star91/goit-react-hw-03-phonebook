@@ -17,6 +17,24 @@ export default class Mobile extends React.Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts)
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+          }
+    }
+
+componentDidUpdate(prevProps, prevState) {
+    // console.log(prevProps);
+    if (this.state.contacts !== prevState.contacts) {
+      // console.log('Update contacts');
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+    }
+    // console.log(this.state);
+  }
+
 addContact = ({ name, number }) => {
     const { contacts } = this.state;
     const contact = {
